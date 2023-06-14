@@ -7,12 +7,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTerraformHelloWorldExample(t *testing.T) {
+func TestTerraformEc2ContractExample(t *testing.T) {
 	// website::tag::2:: Construct the terraform options with default retryable errors to handle the most common
 	// retryable errors in terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		// website::tag::1:: Set the path to the Terraform code that will be tested.
-		TerraformDir: "../examples/hello_world",
+		TerraformDir: "../examples/smellow_world",
 	})
 
 	// website::tag::5:: Clean up resources with "terraform destroy" at the end of the test.
@@ -22,7 +22,6 @@ func TestTerraformHelloWorldExample(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	// website::tag::4:: Run `terraform output` to get the values of output variables and check they have the expected values.
-	output := terraform.Output(t, terraformOptions, "hello_world")
-	assert.Equal(t, "Hello, World!", output)
+	output := terraform.Output(t, terraformOptions, "smellow_world")
+	assert.Equal(t, "HelloWorld", output)
 }
-
