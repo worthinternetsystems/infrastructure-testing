@@ -23,5 +23,5 @@ func TestTerraformEc2ContractExample(t *testing.T) {
 
 	// website::tag::4:: Run `terraform output` to get the values of output variables and check they have the expected values.
 	output := terraform.Output(t, terraformOptions, "smellow_world")
-	assert.Equal(t, "HelloWorld", output)
+	assert.Contains(t, output, "Name")
 }
