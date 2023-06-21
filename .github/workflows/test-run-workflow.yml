@@ -9,6 +9,8 @@ jobs:
       - name: AWS login
         run: |
           echo $AWS_ACCESS_KEY_ID
+          aws configure set aws_access_key_id ${{ vars.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         env:
           AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -18,8 +20,6 @@ jobs:
           npm install terraform
       - name: Run tests
         run: |
-          aws configure set aws_access_key_id ${{ vars.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           echo $AWS_ACCESS_KEY_ID
           cd test
           go test -v -timeout 30m
