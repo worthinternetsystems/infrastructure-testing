@@ -12,5 +12,5 @@ jobs:
           npm install terraform
       - name: Run tests
         run: |
-          cd <rootDir>/test
+          cd ../../test
           go test -v -run TestTerraformHelloWorldExample
