@@ -1,29 +1,25 @@
 on: [push]
 
+env:
+  AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: ${{ vars.AWS_REGION }}
+
 jobs:
   build:
     name: Run Infrastructure Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: AWS login
-        run: |
-          echo $AWS_ACCESS_KEY_ID
-          aws configure set aws_access_key_id ${{ vars.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set aws_region ${{ vars.AWS_REGION }}
-          aws s3 ls
-        env:
-          AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ vars.AWS_REGION }}
       - name: Install dependencies
         run: |
           npm install go
           npm install terraform
       - name: Run tests
         run: |
-          echo $AWS_ACCESS_KEY_ID
+          aws configure set aws_access_key_id ${{ vars.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set aws_region ${{ vars.AWS_REGION }}
           cd test
           go test -v -timeout 30m
         
