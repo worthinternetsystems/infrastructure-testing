@@ -15,3 +15,6 @@ jobs:
           echo $AWS_ACCESS_KEY_ID
           cd test
           go test -v -timeout 30m
+        env:
+        AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
