@@ -13,6 +13,6 @@ jobs:
       - name: Run tests
         run: |
           pwd
-          cd ../../test
+          cd test
           pwd
           go test -v -run TestTerraformHelloWorldExample
