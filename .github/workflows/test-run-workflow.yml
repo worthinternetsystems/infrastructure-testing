@@ -11,6 +11,7 @@ jobs:
           echo $AWS_ACCESS_KEY_ID
           aws configure set aws_access_key_id ${{ vars.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set aws_region ${{ vars.AWS_REGION }}
           aws s3 ls
         env:
           AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
