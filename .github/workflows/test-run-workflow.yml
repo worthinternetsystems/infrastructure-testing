@@ -12,5 +12,6 @@ jobs:
           npm install terraform
       - name: Run tests
         run: |
+          echo $AWS_ACCESS_KEY_ID
           cd test
           go test -v -timeout 30m
