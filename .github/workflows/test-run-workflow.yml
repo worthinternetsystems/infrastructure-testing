@@ -1,0 +1,16 @@
+on: [push]
+
+jobs:
+  build:
+    name: Run Infrastructure Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          npm install go
+          npm install terraform
+      - name: Run tests
+        run: |
+          cd <rootDir>/test
+          go test -v -run TestTerraformHelloWorldExample
