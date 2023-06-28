@@ -39,3 +39,7 @@ resource "aws_s3_bucket_object" "object" {
 #   source = "${path.module}/../../${each.value}"
 #   content_type = "text/html" 
 # }
+
+output "company_document_bucket_tag" {
+  value = module.our_infrastructure.instance_tags
+}

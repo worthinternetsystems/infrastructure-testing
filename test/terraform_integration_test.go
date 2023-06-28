@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func integrationTestS3bucketWithS3Object(t *testing.T) {
+func IntegrationTestS3bucketWithS3Object(t *testing.T) {
 	// website::tag::2:: Construct the terraform options with default retryable errors to handle the most common
 	// retryable errors in terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
@@ -36,6 +36,10 @@ func integrationTestS3bucketWithS3Object(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	} 
+
+	// website::tag::4:: Run `terraform output` to get the values of output variables and check they have the expected values.
+	output := terraform.Output(t, terraformOptions, "our_infrastructure")
+	assert.Contains(t, output, "Name")
 
 	// Run `terraform output` to get the value of an output variable
 	bucketID := terraform.Output(t, terraformOptions, "bucket_id")
