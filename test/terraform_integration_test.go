@@ -5,10 +5,12 @@ import (
 	"testing"
 	"log"
 
+	"github.com/gruntwork-io/terratest/modules/aws"
 	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
 )
 
-func IntegrationTestS3bucketWithS3Object(t *testing.T) {
+func integrationTestS3bucketWithS3Object(t *testing.T) {
 	// website::tag::2:: Construct the terraform options with default retryable errors to handle the most common
 	// retryable errors in terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
@@ -17,7 +19,7 @@ func IntegrationTestS3bucketWithS3Object(t *testing.T) {
 	})
 
 	// Pick a random AWS region to test in. This helps ensure your code works in all regions.
-	// awsRegion := aws.GetRandomStableRegion(t, nil, nil)
+	awsRegion := aws.GetRandomStableRegion(t, nil, nil)
 
 	// website::tag::5:: Clean up resources with "terraform destroy" at the end of the test.
 	defer terraform.Destroy(t, terraformOptions)
@@ -35,11 +37,11 @@ func IntegrationTestS3bucketWithS3Object(t *testing.T) {
 		log.Fatal(err)
 	} 
 
-	// // Run `terraform output` to get the value of an output variable
-	// bucketID := terraform.Output(t, terraformOptions, "bucket_id")
+	// Run `terraform output` to get the value of an output variable
+	bucketID := terraform.Output(t, terraformOptions, "bucket_id")
 
-	// // Verify that our Bucket has versioning enabled
-	// actualStatus := aws.GetS3BucketVersioning(t, awsRegion, bucketID)
-	// expectedStatus := "Enabled"
-	// assert.Equal(t, expectedStatus, actualStatus)
+	// Verify that our Bucket has versioning enabled
+	actualStatus := aws.GetS3BucketVersioning(t, awsRegion, bucketID)
+	expectedStatus := "Enabled"
+	assert.Equal(t, expectedStatus, actualStatus)
 }
